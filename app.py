@@ -1,12 +1,13 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import jwt
 import datetime
+import os
 
 # Create the Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder="frontend", static_url_path="")
 
 # Secret key for JWT (in a real app, store this securely)
-SECRET_KEY = "SuperSecret123"
+SECRET_KEY = os.getenv("SECRET_KEY", "SuperSecret123")  # Use environment variable for security
 
 # Fake user database
 fake_users_db = {
@@ -25,10 +26,10 @@ def generate_token(username):
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
     return token
 
-# Homepage route
+# Serve static HTML files
 @app.route("/")
-def home():
-    return "Welcome to the Basic JWT App!"
+def serve_home():
+    return send_from_directory(app.static_folder, "index.html")
 
 # Login route
 @app.route("/login", methods=["POST"])
@@ -69,7 +70,12 @@ def protected():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
 
+# Catch-all route for other static files (CSS, JS)
+@app.route("/<path:path>")
+def static_files(path):
+    return send_from_directory(app.static_folder, path)
+
 # Run the app
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
- 
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
