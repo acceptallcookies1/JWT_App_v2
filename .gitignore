@@ -1,0 +1,12 @@
+
+# Python cache / compiled
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+
+# Other
+.DS_Store
