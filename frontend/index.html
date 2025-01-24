@@ -8,6 +8,8 @@
 </head>
 <body>
   <h1>Welcome to the Basic JWT App</h1>
+
+  <!-- Login Form -->
   <form id="loginForm">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -17,7 +19,18 @@
     <br>
     <button type="submit">Login</button>
   </form>
+
   <p id="message"></p>
+
+  <!-- Token Display -->
+  <h2>Token</h2>
+  <textarea id="tokenDisplay" rows="5" cols="50" readonly></textarea>
+  <br>
+
+  <!-- Button for Post-Auth -->
+  <button id="postAuthButton" disabled>Verify Token</button>
+  <p id="postAuthMessage"></p>
+
   <script src="script.js"></script>
 </body>
 </html>
