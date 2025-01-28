@@ -28,17 +28,17 @@ git clone https://github.com/your-repo-name.git
 cd your-repo-name
 
 
-### **2. Install Dependencies
+### **2. Install Dependencies**
 pip install -r requirements.txt
 
 
-### **3. Run the Application Locally
+### **3. Run the Application Locally**
 python app.py
 
 
-## Run with Docker
+# Run with Docker
 
-### 1. Build the Docker image
+## 1. Build the Docker image
 docker build -t flask-jwt-app .
 
 ## 2. Run the container
@@ -67,7 +67,7 @@ heroku open
 
 You can access the app on Heroku to test authentication and endpoints without additional infrastructure costs.
 
-##E ndpoints
+## Endpoints
 ### 1. Login
 URL: /login
 Method: POST
@@ -78,7 +78,9 @@ Payload:
 }
 
 Response:
+
 200 OK: Returns a JWT token.
+
 401 Unauthorized: Invalid credentials.
 
 ### 2. Post Authentication
@@ -118,14 +120,14 @@ Response:
 
 ## Project Structure
 .
-├── app.py               # Main application code
-├── requirements.txt     # Python dependencies
-├── frontend/
-│   ├── index.html       # Frontend HTML
-│   ├── style.css        # Styling
-│   └── script.js        # Frontend logic
-├── Dockerfile           # Docker configuration
-└── README.md            # Project documentation
+├── app.py               # Main application code 
+├── requirements.txt     # Python dependencies 
+├── frontend/ 
+│   ├── index.html       # Frontend HTML 
+│   ├── style.css        # Styling 
+│   └── script.js        # Frontend logic 
+├── Dockerfile           # Docker configuration 
+└── README.md            # Project documentation 
 
 
 ## Future Improvements
