@@ -1,41 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JWT App</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Welcome to the Basic JWT App</h1>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+  const postAuthForm = document.getElementById("postAuthForm");
+  const loginMessage = document.getElementById("loginMessage");
+  const postLoginInstructions = document.getElementById("postLoginInstructions");
+  const postAuthMessage = document.getElementById("postAuthMessage");
 
-  <!-- Login Form -->
-  <form id="loginForm">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-  </form>
+  let token = ""; // Store the JWT token
 
-  <p id="loginMessage"></p>
+  // Handle login
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-  <!-- Post-Login Instructions -->
-  <div id="postLoginInstructions" style="display:none;">
-    <h2>Next Steps</h2>
-    <p>You are now authenticated! A Bearer token was generated and sent to the server for this session.</p>
-    <p>
-      To see the token and the communication, open your browser's developer tools:
-    </p>
-    <ol>
-      <li>Right-click on the page and select <strong>Inspect</strong>, or press <strong>Ctrl+Shift+I</strong> (Windows/Linux) or <strong>Cmd+Option+I</strong> (Mac).</li>
-      <li>Go to the <strong>Network</strong> tab.</li>
-      <li>Reload the page or watch the `/login` and `/post-auth` API calls.</li>
-    </ol>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        he
