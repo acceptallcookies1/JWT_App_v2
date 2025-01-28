@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
-  const tokenDisplay = document.getElementById("tokenDisplay");
-  const postAuthButton = document.getElementById("postAuthButton");
-  const messageElement = document.getElementById("message");
+  const postAuthForm = document.getElementById("postAuthForm");
+  const loginMessage = document.getElementById("loginMessage");
   const postAuthMessage = document.getElementById("postAuthMessage");
 
-  let token = ""; // Store the token after login
+  let token = ""; // Store the JWT token
 
-  // Login Form Submission
+  // Handle login
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
@@ -25,31 +24,34 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const data = await response.json();
         token = data.token;
+        loginMessage.textContent = "Login successful!";
+        loginMessage.style.color = "green";
 
-        // Display token and enable post-auth button
-        tokenDisplay.value = token;
-        postAuthButton.disabled = false;
-        messageElement.textContent = "Login successful! Token generated.";
-        messageElement.style.color = "green";
+        // Show the post-auth form
+        postAuthForm.style.display = "block";
       } else {
-        const error = await response.json();
-        messageElement.textContent = error.error || "Login failed.";
-        messageElement.style.color = "red";
+        loginMessage.textContent = "Invalid credentials.";
+        loginMessage.style.color = "red";
       }
-    } catch (err) {
-      messageElement.textContent = "An error occurred during login.";
-      messageElement.style.color = "red";
+    } catch (error) {
+      loginMessage.textContent = "An error occurred during login.";
+      loginMessage.style.color = "red";
     }
   });
 
-  // Post-Auth Verification
-  postAuthButton.addEventListener("click", async () => {
+  // Handle post-auth form submission
+  postAuthForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = document.getElementById("formData").value;
+
     try {
       const response = await fetch("/post-auth", {
-        method: "GET",
+        method: "POST",
         headers: {
+          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
+        body: JSON.stringify({ formData }),
       });
 
       if (response.ok) {
@@ -58,11 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
         postAuthMessage.style.color = "green";
       } else {
         const error = await response.json();
-        postAuthMessage.textContent = error.error || "Token verification failed.";
+        postAuthMessage.textContent = error.error || "An error occurred.";
         postAuthMessage.style.color = "red";
       }
-    } catch (err) {
-      postAuthMessage.textContent = "An error occurred during token verification.";
+    } catch (error) {
+      postAuthMessage.textContent = "An error occurred during form submission.";
       postAuthMessage.style.color = "red";
     }
   });

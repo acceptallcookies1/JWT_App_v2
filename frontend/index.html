@@ -20,15 +20,17 @@
     <button type="submit">Login</button>
   </form>
 
-  <p id="message"></p>
+  <p id="loginMessage"></p>
 
-  <!-- Token Display -->
-  <h2>Token</h2>
-  <textarea id="tokenDisplay" rows="5" cols="50" readonly></textarea>
-  <br>
+  <!-- Post Authentication Form -->
+  <h2>Post Authentication Form</h2>
+  <form id="postAuthForm" style="display:none;">
+    <label for="formData">Enter Some Data:</label>
+    <input type="text" id="formData" name="formData" required>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
 
-  <!-- Button for Post-Auth -->
-  <button id="postAuthButton" disabled>Verify Token</button>
   <p id="postAuthMessage"></p>
 
   <script src="script.js"></script>
