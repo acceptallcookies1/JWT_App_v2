@@ -10,8 +10,8 @@ app = Flask(__name__, static_folder="frontend", static_url_path="")
 
 # Initialize rate limiting
 limiter = Limiter(
-    app,
-    key_func=get_remote_address,
+    get_remote_address,
+    app=app,
     default_limits=["5 per minute"],  # Default limit for all routes
 )
 
