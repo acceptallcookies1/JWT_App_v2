@@ -11,8 +11,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", "SuperSecret123")
 
 # Fake user database
 fake_users_db = {
-    "john_doe": "password123",
-    "alice": "mypassword"
+    "test": "5g5KiSpZ8HRdkfAp3O3T*",
+    "test2": "BE7BnEpqCuVuMbrYyQSH@"
 }
 
 # Function to generate a JWT

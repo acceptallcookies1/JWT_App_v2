@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
-  const postAuthForm = document.getElementById("postAuthForm");
   const loginMessage = document.getElementById("loginMessage");
-  const postAuthMessage = document.getElementById("postAuthMessage");
+  const postLoginInstructions = document.getElementById("postLoginInstructions");
 
   let token = ""; // Store the JWT token
 
@@ -24,48 +23,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const data = await response.json();
         token = data.token;
+
+        // Update the UI
         loginMessage.textContent = "Login successful!";
         loginMessage.style.color = "green";
-
-        // Show the post-auth form
-        postAuthForm.style.display = "block";
+        postLoginInstructions.style.display = "block"; // Show the instructions
       } else {
         loginMessage.textContent = "Invalid credentials.";
         loginMessage.style.color = "red";
+        postLoginInstructions.style.display = "none"; // Hide instructions on failure
       }
     } catch (error) {
       loginMessage.textContent = "An error occurred during login.";
       loginMessage.style.color = "red";
-    }
-  });
-
-  // Handle post-auth form submission
-  postAuthForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = document.getElementById("formData").value;
-
-    try {
-      const response = await fetch("/post-auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ formData }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        postAuthMessage.textContent = data.message;
-        postAuthMessage.style.color = "green";
-      } else {
-        const error = await response.json();
-        postAuthMessage.textContent = error.error || "An error occurred.";
-        postAuthMessage.style.color = "red";
-      }
-    } catch (error) {
-      postAuthMessage.textContent = "An error occurred during form submission.";
-      postAuthMessage.style.color = "red";
+      postLoginInstructions.style.display = "none"; // Hide instructions on error
     }
   });
 });
