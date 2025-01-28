@@ -1,101 +1,137 @@
-# JWT Authentication App
+# Flask JWT App
 
-This is a small Flask-based web application that implements **JWT** for user authentication. The app is designed to showcase a secure login system and protected routes, and it is containerized with Docker.
+A simple Flask-based application demonstrating user authentication, JWT (JSON Web Tokens), and secure API interactions. The app includes a login page, post-authentication form, and rate limiting to prevent abuse.
 
 ---
 
 ## **Features**
-1. **User Authentication**:
-   - `/login` endpoint for username/password authentication.
-   - JWT is generated for valid users.
-2. **Protected Routes**:
-   - `/post-auth` endpoint requires a valid JWT to access.
-3. **Dockerized**:
-   - The app runs inside a Docker container for consistent deployment.
+- User authentication with JWT tokens.
+- Protected `/post-auth` endpoint for form submissions.
+- Input validation and sanitization to prevent injection attacks.
+- Rate limiting to prevent brute-force attacks.
+- Fully containerized with Docker for easy deployment.
 
 ---
 
-## **Tech Stack**
-- **Backend**: Flask (Python)
-- **Authentication**: PyJWT
-- **Containerization**: Docker
+## **Requirements**
+- Python 3.10+
+- Flask
+- Flask-Limiter
+- Docker (optional)
 
 ---
 
 ## **Getting Started**
 
-### **Prerequisites**
-- Docker installed on your system.
+### **1. Clone the Repository**
+git clone https://github.com/your-repo-name.git
+cd your-repo-name
 
 
-### Docker Hub
-
-The app is available as a Docker image on Docker Hub:
-
-Link: florinbuzea/basic-jwt-app
-To run the container directly from Docker Hub:
-
-docker run -p 5000:5000 florinbuzea/basic-jwt-app
+### **2. Install Dependencies
+pip install -r requirements.txt
 
 
-### **Running the App Locally**
-1. Clone the repository:
-   git clone https://github.com/acceptallcookies1/Basic_jwt_app.git
-   cd Basic_jwt_app
+### **3. Run the Application Locally
+python app.py
 
-2. Build the Docker image:
- docker build -t basic-jwt-app .
 
-3. Run the Docker contasiner: 
-docker run -p 5000:5000 basic-jwt-app
+## Run with Docker
 
-4. Access the app in your browser or API tool at:
-- Homepage: http://127.0.0.1:5000
-- Login Endpoint: http://127.0.0.1:5000/login
-- Protected Route: http://127.0.0.1:5000/post-auth
+### 1. Build the Docker image
+docker build -t flask-jwt-app .
 
--------------------------------------------------------------------------------------
+## 2. Run the container
+docker run -p 5000:5000 flask-jwt-app
 
-### Using the API
+Access the app at http://localhost:5000.
 
-# Login Endpoint:
-- URL: /login
-- Method: POST
-- Request Body (json):
+
+## Deploy to Heroku
+This app can be deployed freely to Heroku for testing purposes.
+
+### Steps to Deploy
+
+1. Install the Heroku CLI.
+2. Log in to your Heroku account:
+heroku login
+
+3. Create a new Heroku app:
+heroku create
+
+4. Deploy the app:
+git push heroku main
+
+5. Open your app in the browser:
+heroku open
+
+You can access the app on Heroku to test authentication and endpoints without additional infrastructure costs.
+
+##E ndpoints
+### 1. Login
+URL: /login
+Method: POST
+Payload:
 {
-  "username": "john_doe",
-  "password": "password123"
+  "username": "test",
+  "password": "5g5KiSpZ8HRdkfAp3O3T*"
 }
 
-# You get: 
+Response:
+200 OK: Returns a JWT token.
+401 Unauthorized: Invalid credentials.
+
+### 2. Post Authentication
+URL: /post-auth
+Method: POST
+Headers:
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-
-# Protected Route
-- URL: /post-auth
-- Method: GET
-- Headers:
- Authorization: Bearer <your_JWT_token>
-
-
-- Response(Valid token):
-{
-  "message": "Hello, john_doe! This is a protected route."
+  "Authorization": "Bearer <your-token>"
 }
 
 
-
-### Future Enhancements
-1. Add a frontend for user interaction (HTML/CSS/JS).
-2. Integrate a database for user management.
-3. Deploy to a cloud platform (e.g., Heroku or AWS).
-4. Implement HTTPS and secure secrets management.
+Payload: 
+{
+  "formData": "example-data"
+}
 
 
-License
-This project is open-source and available under the MIT License.
+Response:
+200 OK: Form data submitted successfully.
+400 Bad Request: Invalid or missing form data.
+401 Unauthorized: Missing or invalid token.
 
-Contributors
-Florin Buzea
+
+## Security Measures
+1. Input Validation and Sanitization:
+- Ensures only valid data is accepted.
+- Alphanumeric check for form inputs.
+
+2. Rate Limiting:
+- Login attempts: 5 per minute.
+- Post-auth interactions: 10 per minute.
+
+3. Debug Mode Disabled:
+- Prevents sensitive information from being exposed in production.
+
+
+## Project Structure
+.
+├── app.py               # Main application code
+├── requirements.txt     # Python dependencies
+├── frontend/
+│   ├── index.html       # Frontend HTML
+│   ├── style.css        # Styling
+│   └── script.js        # Frontend logic
+├── Dockerfile           # Docker configuration
+└── README.md            # Project documentation
+
+
+## Future Improvements
+1. Adding a Database:
+- Replace the current dictionary-based user database with a real database (e.g., PostgreSQL or MySQL).
+- Enhance user authentication with hashed passwords and user roles.
+
+2. Migrating to AWS Infrastructure:
+- Deploy the app to AWS services for better scalability and integration with other AWS tools (RDS for database, API Gateway, Lambda).
