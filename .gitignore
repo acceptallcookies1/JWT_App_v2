@@ -10,3 +10,31 @@ venv/
 
 # Other
 .DS_Store
+
+#Remove .idea and .git
+.idea/
+*.iml
+
+# **Python Logs and Caches**
+*.log
+logs/
+debug.log
+
+# **Git and Ignore Metadata**
+.git/modules/
+.git/worktrees/
+
+# **Pulumi Generated Files**
+Pulumi.yaml
+Pulumi.*.yaml
+.pulumi/
+
+# **AWS Credentials (Just in case)**
+.aws/
+
+# **Environment and Secrets Files**
+.env
+.env.local
+.env.production
+.env.development
+secrets.json
