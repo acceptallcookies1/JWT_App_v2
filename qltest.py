@@ -1,14 +1,7 @@
-import pymysql
+import os
 
-def vulnerable_query(user_input):
-    conn = pymysql.connect(host='localhost', user='root', password='root', database='testdb')
-    cursor = conn.cursor()
+def insecure_system_call(user_input):
+    os.system("echo " + user_input)  # ❌ Unsafe: Can execute shell commands
 
-    # 🚨 This is vulnerable (CodeQL should detect this)
-    query = f"SELECT * FROM users WHERE username = '{user_input}'"
-    cursor.execute(query)  # ❌ Unsafe SQL execution
-
-    return cursor.fetchall()
-
-user_input = input("Enter username: ")
-print(vulnerable_query(user_input))
+user_input = input("Enter command: ")
+insecure_system_call(user_input)
