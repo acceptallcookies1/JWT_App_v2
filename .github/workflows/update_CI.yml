@@ -1,0 +1,11 @@
+name: CI
+on: 
+  push:
+
+permissions: 
+  contents: read
+jobs: 
+  pin:
+    runs-on: ubuntu-latest
+    steps: 
+      uses: pyupio/safety@9a3b0a6eb17f5d5391b7b198600124db19be375d
